@@ -29,19 +29,23 @@ public class Bank implements BankInterface {
 
     public Long openCommercialAccount(Company company, int pin, double startingDeposit) {
         // TODO: complete the method
-    	Long currAcc=Optional.ofNullable(account.getAccountNumber()).orElse(0L);
-    	
+     	Long currAcc=0L;
+        if(!(account==null)) {
     	account=new Account(company,currAcc , pin, startingDeposit);
     	
     	accounts.put(currAcc, account);
-    	
+        }
         return currAcc;
     }
 
     public Long openConsumerAccount(Person person, int pin, double startingDeposit) {
         // TODO: complete the method
-    	Long currAcc=Optional.ofNullable(account.getAccountNumber()).orElse(0L);
+    	Long currAcc=0L;
+    if(!(account==null)) {
+    	currAcc=account.getAccountNumber();
     	account=new Account(person, currAcc, pin, startingDeposit);
+    	
+    }
     	
     	
         return currAcc;
@@ -49,52 +53,76 @@ public class Bank implements BankInterface {
 
     public double getBalance(Long accountNumber) {
         // TODO: complete the method
-    	
-    	account=accounts.get(accountNumber);
-        return account.getBalance();
+    	double balance=0.0;
+    	if(account!=null) {
+    		account=accounts.get(accountNumber);	
+    		balance=account.getBalance();
+    		
+    	}
+        return balance;
     }
 
     public void credit(Long accountNumber, double amount) {
         // TODO: complete the method
-    	account=accounts.get(accountNumber);
-    	
+    	if(account!=null) {
+    		account=accounts.get(accountNumber);
+        
     	account.creditAccount(amount);
+    	}
     	
     }
 
     public boolean debit(Long accountNumber, double amount) {
         // TODO: complete the method
+    	boolean isdebit=false;
+    	if(account!=null) {
+    		account=accounts.get(accountNumber);
+        	
+    		account.debitAccount(amount);
+    		isdebit=true;
+    	}
     	
-    	account=accounts.get(accountNumber);
-    	
-        return account.debitAccount(amount);
+        return isdebit;
     }
 
     public boolean authenticateUser(Long accountNumber, int pin) {
         // TODO: complete the method
-    account=accounts.get(accountNumber);
-    	
-        return account.validatePin(pin);
+    	boolean authuser=false;
+    	if(account!=null) {
+    		account=accounts.get(accountNumber);
+        	
+    		account.validatePin(pin);
+    		authuser=true;
+    	}
+        return authuser;
     }
     
     public void addAuthorizedUser(Long accountNumber, Person authorizedPerson) {
         // TODO: complete the method
-    	account=accounts.get(accountNumber);
-    	if(account.getAccountHolder().getIdNumber()==authorizedPerson.getIdNumber()) {
-    		
-    		accounts.put(account.getAccountNumber(), account);
+    	if(account!=null) {
+    		account=accounts.get(accountNumber);	
+    	
+    		if(account.getAccountHolder().getIdNumber()==authorizedPerson.getIdNumber()) {
+        		
+        		accounts.put(account.getAccountNumber(), account);
+        	}
+        	
     	}
+    	
     	
     	
     }
 
     public boolean checkAuthorizedUser(Long accountNumber, Person authorizedPerson) {
         // TODO: complete the method
+    	if(account!=null) {
+    		account=accounts.get(accountNumber);	
     	
-    	account=accounts.get(accountNumber);
         if(account.getAccountHolder().getIdNumber()==authorizedPerson.getIdNumber()) {
         	return true;
         }
+        
+    	}
         return false;
     }
 
