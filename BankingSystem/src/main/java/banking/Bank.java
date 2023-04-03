@@ -3,6 +3,7 @@ package banking;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,7 +16,7 @@ public class Bank implements BankInterface {
 
     public Bank() {
         // TODO: complete the constructor
-    	
+    
     }
 
     private Account getAccount(Long accountNumber) {
@@ -28,7 +29,7 @@ public class Bank implements BankInterface {
 
     public Long openCommercialAccount(Company company, int pin, double startingDeposit) {
         // TODO: complete the method
-    	Long currAcc=account.getAccountNumber();
+    	Long currAcc=Optional.ofNullable(account.getAccountNumber()).orElse(0L);
     	
     	account=new Account(company,currAcc , pin, startingDeposit);
     	
@@ -39,7 +40,7 @@ public class Bank implements BankInterface {
 
     public Long openConsumerAccount(Person person, int pin, double startingDeposit) {
         // TODO: complete the method
-    	Long currAcc=account.getAccountNumber();
+    	Long currAcc=Optional.ofNullable(account.getAccountNumber()).orElse(0L);
     	account=new Account(person, currAcc, pin, startingDeposit);
     	
     	
@@ -99,12 +100,16 @@ public class Bank implements BankInterface {
 
     public Map<String, Double> getAverageBalanceReport() {
         // TODO: complete the method
-    	//Stream.of(accounts).
-    	
+    	//Stream.of(accounts).filter(a->a.);
+   double averageperson=accounts.values().stream().filter(a->a.getAccountHolder() instanceof Person).collect(Collectors.averagingDouble(n->n.getBalance()));
    
+   double averagecompany=accounts.values().stream().filter(a->a.getAccountHolder() instanceof Company).collect(Collectors.averagingDouble(n->n.getBalance()));
     	
+   Map<String,Double> globalavarege=new HashMap<>();
+   globalavarege.put("ConsumerAccount", averageperson);
+   globalavarege.put("CommercialAccount", averagecompany);
     	
-        return new HashMap<>();
+        return globalavarege;
     }
 
 	
