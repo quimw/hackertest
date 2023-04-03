@@ -6,6 +6,7 @@ package banking;
 public class Transaction implements TransactionInterface {
     private Long accountNumber;
     private BankInterface bank;
+    private int attempedPin;
 
     /**
      * @param bank          The bank where the account is housed.
@@ -15,19 +16,28 @@ public class Transaction implements TransactionInterface {
      */
     public Transaction(BankInterface bank, Long accountNumber, int attemptedPin) throws Exception {
         // TODO: complete the constructor
+    	this.bank=bank;
+    	this.accountNumber=accountNumber;
+    	this.attempedPin=attemptedPin;
     }
 
     public double getBalance() {
         // TODO: complete the method
-        return -1;
+    	
+        return bank.getBalance(accountNumber);
     }
 
     public void credit(double amount) {
         // TODO: complete the method
+    	
+    	bank.credit(accountNumber, amount);
+    	
+    	
     }
 
     public boolean debit(double amount) {
         // TODO: complete the method
-        return false;
+    	
+        return bank.debit(accountNumber, amount);
     }
 }

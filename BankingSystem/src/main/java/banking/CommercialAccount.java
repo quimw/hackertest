@@ -6,11 +6,20 @@ import java.util.List;
  * Account implementation for commercial (business) customers.
  * The account's holder is a {@link Company}.
  */
-public class CommercialAccount {
+public class CommercialAccount{
     private List<Person> authorizedUsers;
+    private Company company;
+    private Long accountNumber;
+    private int pin;
+    private double startingDeposit;
 
     public CommercialAccount(Company company, Long accountNumber, int pin, double startingDeposit) {
         // TODO: complete the constructor
+    	this.company=company;
+    	this.accountNumber=accountNumber;
+    	this.pin=pin;
+    	this.startingDeposit=startingDeposit;
+    
     }
 
     /**
